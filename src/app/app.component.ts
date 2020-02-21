@@ -9,12 +9,13 @@ import { apiConfig, loginRequest, tokenRequest, isIE} from './appConfig.js';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
   title = 'Azure AD B2C';
   isIframe = false;
   loggedIn = false;
-  accessToken: string;
   tokenAcquired = false;
+  accessToken: string;
   apiResponse: any;
 
   constructor(private broadcastService: BroadcastService, private authService: MsalService, private http: HttpClient) { }
@@ -25,19 +26,22 @@ export class AppComponent implements OnInit {
     this.checkAccount();
 
     this.broadcastService.subscribe('msal:loginSuccess', (payload) => {
+      console.log('login succeeded');
       this.checkAccount();
     });
 
     this.broadcastService.subscribe('msal:loginFailure', (payload) => {
-      this.checkAccount();
+      console.log('login failed');
     });
       
     this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
+      console.log('access token acquired: ' + new Date().toString());
       this.tokenAcquired = true;
       this.accessToken = payload.accessToken;
     });
  
     this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
+      console.log('access token acquisition fails');
     });
 
     this.authService.handleRedirectCallback((authError, response) => {
@@ -82,16 +86,19 @@ export class AppComponent implements OnInit {
       this.authService.loginPopup(tokenRequest)
         .then(res => {
           this.callAPI(this.accessToken)
-        });
+        }).catch(err => console.log(err));
     }
   }
 
   callAPI(accessToken:string) {
     let config = { headers: { Authorization: 'Bearer ' + accessToken } };
 
+    console.log('API call made at: ' + new Date().toString());
+    
     this.http.get(apiConfig.webApi, config).toPromise()
       .then(res => {
         this.apiResponse = res;
-      }).catch(err => console.log('MSAL Logging: ', err));
+        console.log('API responded at: ' + new Date().toString());
+      }).catch(err => console.log(err));
   }
 }
