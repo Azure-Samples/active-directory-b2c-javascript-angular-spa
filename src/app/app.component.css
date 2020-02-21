@@ -1,0 +1,17 @@
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+a.title {
+  color: white;
+}
+
+.card-section {
+  margin: 10%;
+  padding: 5%;
+}
+
+#apiResponse {
+  font-size: large;
+  background-color: rgb(161, 104, 252);
+}
