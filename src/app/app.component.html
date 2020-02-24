@@ -16,3 +16,8 @@
   </mat-card-actions>
   <mat-card-content id="apiResponse" *ngIf="tokenAcquired"> Welcome {{apiResponse?.name}}! </mat-card-content>
 </mat-card>
+
+<div class="container">
+  <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
+  <router-outlet *ngIf="!isIframe"></router-outlet>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BroadcastService, MsalService } from '@azure/msal-angular';
+import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { Logger, CryptoUtils } from 'msal';
 import { HttpClient } from '@angular/common/http';
 import { apiConfig, loginRequest, tokenRequest, isIE} from './appConfig.js';
@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   isIframe = false;
   loggedIn = false;
   tokenAcquired = false;
-  accessToken: string;
   apiResponse: any;
 
   constructor(private broadcastService: BroadcastService, private authService: MsalService, private http: HttpClient) { }
@@ -25,6 +24,7 @@ export class AppComponent implements OnInit {
 
     this.checkAccount();
 
+    // event listeners for authentication and token requests status
     this.broadcastService.subscribe('msal:loginSuccess', (payload) => {
       console.log('login succeeded');
       this.checkAccount();
@@ -37,13 +37,14 @@ export class AppComponent implements OnInit {
     this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
       console.log('access token acquired: ' + new Date().toString());
       this.tokenAcquired = true;
-      this.accessToken = payload.accessToken;
     });
  
     this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
       console.log('access token acquisition fails');
     });
 
+
+    // redirect callback for redirect flow (IE)
     this.authService.handleRedirectCallback((authError, response) => {
       if (authError) {
         console.error('Redirect Error: ', authError.errorMessage);
@@ -63,6 +64,7 @@ export class AppComponent implements OnInit {
     }));
   }
 
+  // other methods
   checkAccount() {
     this.loggedIn = !!this.authService.getAccount();
   }
@@ -85,17 +87,15 @@ export class AppComponent implements OnInit {
     } else {
       this.authService.loginPopup(tokenRequest)
         .then(res => {
-          this.callAPI(this.accessToken)
+          this.callAPI(apiConfig.webApi)
         }).catch(err => console.log(err));
     }
   }
 
-  callAPI(accessToken:string) {
-    let config = { headers: { Authorization: 'Bearer ' + accessToken } };
-
+  callAPI(url:string) {
     console.log('API call made at: ' + new Date().toString());
-    
-    this.http.get(apiConfig.webApi, config).toPromise()
+
+    this.http.get(url).toPromise()
       .then(res => {
         this.apiResponse = res;
         console.log('API responded at: ' + new Date().toString());

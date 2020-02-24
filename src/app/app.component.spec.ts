@@ -5,6 +5,7 @@ import { MatToolbarModule, MatButtonModule, MatListModule, MatCardModule } from 
 import { BroadcastService, MsalService, MsalAngularConfiguration } from '@azure/msal-angular';
 import { MSAL_CONFIG, MSAL_CONFIG_ANGULAR } from '@azure/msal-angular/dist/msal.service';
 import { Configuration } from 'msal';
+import { msalConfig, apiConfig, isIE} from './appConfig.js';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -23,29 +24,17 @@ describe('AppComponent', () => {
         MsalService,
         {
           provide: MSAL_CONFIG,
-          useValue: {
-            auth: {
-              clientId: 'e760cab2-b9a1-4c0d-86fb-ff7084abd902', // This is your client ID
-              authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi", //This is your tenant info
-              validateAuthority: false
-            },
-            cache: {
-              cacheLocation: 'localStorage',
-              storeAuthStateInCookie: false
-            },
-          } as Configuration
+          useValue: msalConfig as Configuration
         },
         {
           provide: MSAL_CONFIG_ANGULAR,
           useValue: {
-            popUp: false,
-            consentScopes: [
-              'https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read',
-            ],
+            popUp: !isIE,
+            consentScopes: apiConfig.b2cScopes,
             unprotectedResources: [],
             protectedResourceMap: [
-              ['https://fabrikamb2chello.azurewebsites.net/hello', ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read']],
-            ],
+              [apiConfig.webApi, apiConfig.b2cScopes],
+          ],
           } as MsalAngularConfiguration
         },
         BroadcastService
