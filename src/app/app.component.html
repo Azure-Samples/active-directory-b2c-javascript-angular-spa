@@ -7,16 +7,6 @@
   <button mat-raised-button color="warn" *ngIf="loggedIn" (click)="logout()">Logout</button>
 </mat-toolbar>
 
-<mat-card class='card-section'>
-  <mat-card-title>Sign-in with Microsoft Azure AD B2C</mat-card-title>
-  <mat-card-subtitle>Getting an access token with Azure AD B2C and calling a Web API</mat-card-subtitle>
-  <mat-card-content>This simple sample demonstrates how to use the Microsoft Authentication Library for JavaScript (msal.js) to get an access token and call an API secured by Azure AD B2C.</mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button *ngIf="loggedIn && !tokenAcquired" (click)="getProfile()">Call API</button>
-  </mat-card-actions>
-  <mat-card-content id="apiResponse" *ngIf="tokenAcquired"> Welcome {{apiResponse?.name}}! </mat-card-content>
-</mat-card>
-
 <div class="container">
   <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
   <router-outlet *ngIf="!isIframe"></router-outlet>

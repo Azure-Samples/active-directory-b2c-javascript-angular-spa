@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { msalConfig, isIE, apiConfig} from './appConfig.js';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,7 @@ import { msalConfig, isIE, apiConfig} from './appConfig.js';
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
