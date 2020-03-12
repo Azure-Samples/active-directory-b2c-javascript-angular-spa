@@ -3,9 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatButtonModule, MatListModule, MatCardModule } from '@angular/material';
 import { BroadcastService, MsalService, MsalAngularConfiguration } from '@azure/msal-angular';
-import { MSAL_CONFIG, MSAL_CONFIG_ANGULAR } from '@azure/msal-angular/dist/msal.service';
+import { MSAL_CONFIG, MSAL_CONFIG_ANGULAR } from '@azure/msal-angular';
 import { Configuration } from 'msal';
-import { msalConfig, apiConfig, isIE} from './config';
+import { msalConfig, apiConfig, isIE } from './config';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
