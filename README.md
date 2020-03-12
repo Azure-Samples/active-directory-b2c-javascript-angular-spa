@@ -25,14 +25,14 @@ There are two ways to run this sample:
 
 ## Using the demo environment
 
-This sample demonstrates how to sign in or sign up for an account at "Wingtip Toys" - the demo environment for this sample. Once signed-in, clicking on the **Call Web API** button shows the display name you used when you created your account.
+This sample demonstrates how to sign in or sign up for an account at "Fabrikam B2C" - the demo environment for this sample. Once signed-in, clicking on the **Call Web API** button shows the display name you used when you created your account.
 
 ### Step 1: Clone or download this repository
 
 From your shell or command line:
 
 ```bash
-git clone https://github.com/Azure-Samples/active-directory-b2c-javascript-msal-singlepageapp.git
+git clone https://github.com/Azure-Samples/active-directory-b2c-javascript-angular-spa.git
 ```
 
 ### Step 2: Run the application
@@ -42,7 +42,7 @@ Make sure you've [installed Node](https://nodejs.org/en/download/).
 From your shell or command line:
 
 ```bash
-cd active-directory-b2c-javascript-msal-singlepageapp
+cd active-directory-b2c-javascript-angular-spa
 npm install && npm update
 npm start
 ```
@@ -87,16 +87,15 @@ Provide the following values for the Single Page Application registration:
 
 Now in the sample code, you can replace the single page application's demo environment configuration with your own tenant.  
 
-1. Open the `authConfig.js` file.
+1. Open the `config.ts` file.
 2. Find the assignment for `clientId` and replace the value with the Application ID for the single page application you registered earlier, for example the Application ID found in `My Test SPA` application in the Azure portal.
 3. Find the assignment for `authority` and replacing `b2c_1_susi` with the name of the policy you created in Step 2, and `fabrikamb2c.onmicrosoft.com` by the name of your Azure AD B2C tenant, for example `https://<your-tenant-name>.b2clogin.com/<your-tenant-name>.onmicrosoft.com/<your-sign-in-sign-up-policy>`
-4. Open the `apiConfig.js` file.
-5. Find the assignment for the scopes `b2cScopes` replacing the URL by the scope URL you created for the Web API, e.g. `b2cScopes: ["https://<your-tenant-name>.onmicrosoft.com/helloapi/demo.read"]`
-6. Find the assignment for API URL `webApi` replacing the current URL by the URL where you deployed your Web API in Step 4, e.g. `webApi: "https://fabrikamb2chello.azurewebsites.net/hello`
+4. Find the assignment for the scopes `b2cScopes` replacing the URL by the scope URL you created for the Web API, e.g. `b2cScopes: ["https://<your-tenant-name>.onmicrosoft.com/helloapi/demo.read"]`
+5. Find the assignment for API URL `webApi` replacing the current URL by the URL where you deployed your Web API in Step 4, e.g. `webApi: "https://fabrikamb2chello.azurewebsites.net/hello`
 
 Your resulting code should look as follows:
   
-```javascript
+```TypeScript
 const apiConfig = {
   b2cScopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"],
   webApi: "https://fabrikamb2chello.azurewebsites.net/hello"
@@ -104,7 +103,7 @@ const apiConfig = {
 
 ```
 
-```javascript
+```TypeScript
 const msalConfig = {
   auth: {
     clientId: "e760cab2-b9a1-4c0d-86fb-ff7084abd902",
@@ -131,7 +130,7 @@ const tokenRequest = {
 1. Install the node dependencies if this is your first time running the app (e.g. if you skipped running in the demo environment):
 
     ```bash
-    cd active-directory-b2c-javascript-msal-singlepageapp
+    cd active-directory-b2c-javascript-angular-spa
     npm install && npm update
     ```
 
@@ -151,7 +150,7 @@ const tokenRequest = {
 - [Configure application to use b2clogin.com](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-b2c-overview#configure-application-to-use-b2clogincom)
 - The MSAL.js library allows you to pass [login_hint parameter](https://docs.microsoft.com/en-us/azure/active-directory-b2c/direct-signin) in the [AuthenticationParameters object](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#signing-in-and-getting-tokens-with-msaljs), using `loginHint` attribute.
 
-    ```JavaScript
+    ```TypeScript
       const loginRequest = {
         scopes: ["openid", "profile"],
         loginHint: "someone@contoso.com"
@@ -160,7 +159,7 @@ const tokenRequest = {
 
 - You can pass any custom query string parameter in the [AuthenticationParameters object](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#signing-in-and-getting-tokens-with-msaljs), using `extraQueryParameters` attribute. Following sample sets the campaignId that can be used in the [Azure AD B2C UI](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-ui-customization-custom-dynamic), and the [ui_locales](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-reference-language-customization) set to es (Spanish).
 
-    ```JavaScript
+    ```TypeScript
       const loginRequest = {
         scopes: ["openid", "profile"],
         extraQueryParameters: { campaignId: 'hawaii', ui_locales: 'es' }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { Logger, CryptoUtils } from 'msal';
 import { HttpClient } from '@angular/common/http';
-import { loginRequest, isIE} from './config';
+import { loginRequest, isIE } from './config';
 
 @Component({
   selector: 'app-root',

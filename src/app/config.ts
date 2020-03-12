@@ -17,17 +17,17 @@ export const msalConfig: Configuration = {
     },
 }
 
-// main API configuration parameters
-export const apiConfig = {
-    b2cScopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"],
-    webApi: "https://fabrikamb2chello.azurewebsites.net/hello"
-};
-
 // Add here scopes for id token
 // For a full list of available authentication parameters, 
 // visit https://azuread.github.io/microsoft-authentication-library-for-js/docs/msal/modules/_authenticationparameters_.html
 export const loginRequest = {
     scopes: ["openid", "profile"],
+};
+
+// main API configuration parameters
+export const apiConfig = {
+    b2cScopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"],
+    webApi: "https://fabrikamb2chello.azurewebsites.net/hello"
 };
 
 // Add here scopes for access token to be used at the API endpoints.

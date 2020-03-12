@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import {msalConfig, isIE, apiConfig} from './config'
+import { msalConfig, apiConfig, isIE } from './config';
 import { HomeComponent } from './home/home.component';
 
 @NgModule({
