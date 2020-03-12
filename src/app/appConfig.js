@@ -26,7 +26,7 @@ export const loginRequest = {
 
 // request to acquire a token for resource access
 export const tokenRequest = {
-    scopes: apiConfig.b2cScopes
+    scopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"]
 };
 
 

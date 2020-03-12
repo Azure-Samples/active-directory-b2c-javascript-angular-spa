@@ -6,7 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MsalModule, MsalInterceptor } from '@azure/msal-angular';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { msalConfig, isIE, apiConfig} from './appConfig.js'
+import { isIE, apiConfig} from './appConfig.js'
+import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 
 @NgModule({
@@ -24,15 +25,16 @@ import { HomeComponent } from './home/home.component';
     MatListModule,
     MatCardModule,
     AppRoutingModule,
-    MsalModule.forRoot(msalConfig,  {
+    MsalModule.forRoot(environment.msalConfig,  
+    {
       popUp: !isIE,
-      consentScopes: apiConfig.b2cScopes,
+      consentScopes: environment.apiConfig.b2cScopes,
       unprotectedResources: [],
       protectedResourceMap: [
-          [apiConfig.webApi, apiConfig.b2cScopes],
+          [environment.apiConfig.webApi, environment.apiConfig.b2cScopes],
       ],
       extraQueryParameters: {},
-  })
+    })
   ],
   providers: [
     {
