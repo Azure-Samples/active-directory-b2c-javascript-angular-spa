@@ -5,7 +5,7 @@ import { MatToolbarModule, MatButtonModule, MatListModule, MatCardModule } from 
 import { BroadcastService, MsalService, MsalAngularConfiguration } from '@azure/msal-angular';
 import { MSAL_CONFIG, MSAL_CONFIG_ANGULAR } from '@azure/msal-angular/dist/msal.service';
 import { Configuration } from 'msal';
-import { msalConfig, apiConfig, isIE} from './appConfig.js';
+import { msalConfig, apiConfig, isIE} from './config';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

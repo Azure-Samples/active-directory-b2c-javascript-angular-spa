@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { HttpClient } from '@angular/common/http';
-import { apiConfig, tokenRequest, isIE} from '../appConfig.js';
+import { apiConfig, tokenRequest, isIE} from '../config';
 
 @Component({
   selector: 'app-home',
