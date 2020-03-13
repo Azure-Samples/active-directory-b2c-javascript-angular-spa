@@ -48,16 +48,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'AAD B2C | MSAL.JS Angular SPA'`, () => {
+  it(`should have as title 'Azure AD B2C'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('AAD B2C | MSAL.JS Angular SPA');
+    expect(app.title).toEqual('Azure AD B2C');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.title').textContent).toContain('AAD B2C | MSAL.JS Angular SPA');
+    expect(compiled.querySelector('.title').textContent).toContain('Azure AD B2C');
   });
 });

@@ -1,9 +1,9 @@
-import { Configuration } from "msal";
+import { Configuration } from 'msal';
 
 export const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 // Config object to be passed to Msal on creation.
-// For a full list of msal.js configuration parameters, 
+// For a full list of msal.js configuration parameters,
 // visit https://azuread.github.io/microsoft-authentication-library-for-js/docs/msal/modules/_configuration_.html
 export const msalConfig: Configuration = {
     auth: {
@@ -21,13 +21,13 @@ export const msalConfig: Configuration = {
 // For a full list of available authentication parameters, 
 // visit https://azuread.github.io/microsoft-authentication-library-for-js/docs/msal/modules/_authenticationparameters_.html
 export const loginRequest = {
-    scopes: ["openid", "profile"],
+    scopes: ['openid', 'profile'],
 };
 
 // main API configuration parameters
 export const apiConfig = {
-    b2cScopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"],
-    webApi: "https://fabrikamb2chello.azurewebsites.net/hello"
+    b2cScopes: ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read'],
+    webApi: 'https://fabrikamb2chello.azurewebsites.net/hello'
 };
 
 // Add here scopes for access token to be used at the API endpoints.

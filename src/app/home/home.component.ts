@@ -23,12 +23,12 @@ export class HomeComponent implements OnInit {
       this.checkAccount();
     });
 
-    this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
+    this.broadcastService.subscribe('msal:acquireTokenSuccess', (payload) => {
       console.log('access token acquired: ' + new Date().toString());
       this.tokenAcquired = true;
     });
  
-    this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
+    this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
       console.log('access token acquisition fails');
       this.tokenAcquired = false;
     });
@@ -56,13 +56,13 @@ export class HomeComponent implements OnInit {
     } else {
       this.authService.loginPopup(tokenRequest)
         .then(res => {
-          this.callAPI(apiConfig.webApi)
+          this.callAPI(apiConfig.webApi);
         })
         .catch(err => console.log(err));
     }
   }
 
-  callAPI(url:string) {
+  callAPI(url: string) {
     console.log('API call made at: ' + new Date().toString());
 
     this.http.get(url).toPromise()
