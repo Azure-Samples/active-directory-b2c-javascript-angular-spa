@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { Logger, CryptoUtils } from 'msal';
-import { HttpClient } from '@angular/common/http';
-import { loginRequest, isIE } from './config';
+import { loginRequest, isIE } from './app-config';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,7 @@ export class AppComponent implements OnInit {
   isIframe = false;
   loggedIn = false;
 
-  constructor(private broadcastService: BroadcastService, private authService: MsalService, private http: HttpClient) { }
+  constructor(private broadcastService: BroadcastService, private authService: MsalService) { }
   
   ngOnInit() {
 
@@ -38,6 +37,8 @@ export class AppComponent implements OnInit {
         console.error('Redirect Error: ', authError.errorMessage);
         return;
       }
+
+      console.log('Redirect Success: ', response);
     });
 
     this.authService.setLogger(new Logger((logLevel, message, piiEnabled) => {

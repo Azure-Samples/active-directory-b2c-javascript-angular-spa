@@ -22,7 +22,7 @@ This simple sample demonstrates how to use the [Microsoft Authentication Library
 |-------------------|--------------------------------------------|
 | `e2e`             | End-to-end test files.                     |
 | `src`             | Sample source code.                        |
-| `src/app/config.ts` | contains API endpoints and authentication configuration parameters. |
+| `src/app/app-config.ts` | Contains authentication and authorization configuration parameters. |
 | `.editorconfig`   | Defines editor config settings.            |
 | `.gitignore`      | Define what to ignore at commit time.      |
 | `angular.json`    | Angular configuration file.                |
@@ -103,7 +103,7 @@ Provide the following values for the Single Page Application registration:
 
 - Provide a descriptive Name for the single page application, for example, `My Test SPA`. You will identify this application by its Name whenever working in the Azure portal.
 - Mark **Yes** for the **Web App/Web API** setting for your application.
-- Set the **Reply URL** for your app to `http://localhost:6420`. This sample provided in this repository is configured to run on port 6420.
+- Set the **Reply URL** for your app, for example `http://localhost:6420`. The sample provided in this repository is configured to run on port 6420.
 - Create the application.
 - Once the application is created, open your `My Test SPA` and open the **API Access** window (in the left nav menu). Click **Add** and select the name of the Node.js Web API you registered previously, `My Test Node.js Web API`. Select the scope(s) you defined previously, for example, `demo.read` and hit **Save**.
 
@@ -111,11 +111,12 @@ Provide the following values for the Single Page Application registration:
 
 Now in the sample code, you can replace the single page application's demo environment configuration with your own tenant.  
 
-1. Open the `src/app/config.ts` file.
+1. Open the `src/app/app-config.ts` file.
 2. Find the assignment for `clientId` and replace the value with the Application ID for the single page application you registered earlier, for example the Application ID found in `My Test SPA` application in the Azure portal.
 3. Find the assignment for `authority` and replacing `b2c_1_susi` with the name of the policy you created in Step 2, and `fabrikamb2c.onmicrosoft.com` by the name of your Azure AD B2C tenant, for example `https://<your-tenant-name>.b2clogin.com/<your-tenant-name>.onmicrosoft.com/<your-sign-in-sign-up-policy>`
-4. Find the assignment for the scopes `b2cScopes` replacing the URL by the scope URL you created for the Web API, e.g. `b2cScopes: ["https://<your-tenant-name>.onmicrosoft.com/helloapi/demo.read"]`
-5. Find the assignment for API URL `webApi` replacing the current URL by the URL where you deployed your Web API in Step 4, e.g. `webApi: "https://fabrikamb2chello.azurewebsites.net/hello`
+4. Find the assignment for `redirectUri` replacing the URL with redirect uri you that you assigned on Azure Portal>Authentication.
+5. Find the assignment for the scopes `b2cScopes` replacing the URL with the scope URL you created for the Web API, e.g. `b2cScopes: ["https://<your-tenant-name>.onmicrosoft.com/helloapi/demo.read"]`
+6. Find the assignment for API URL `webApi` replacing the current URL with the URL where you deployed your Web API, e.g. `webApi: "https://fabrikamb2chello.azurewebsites.net/hello` or `webApi: "https://localhost:5000/hello`
 
 Your resulting code should look as follows:
   
@@ -132,7 +133,8 @@ const msalConfig = {
   auth: {
     clientId: "e760cab2-b9a1-4c0d-86fb-ff7084abd902",
     authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi",
-    validateAuthority: false
+    validateAuthority: false,
+    redirectUri: "http://localhost:6420/",
   },
   cache: {
     cacheLocation: "localStorage",
