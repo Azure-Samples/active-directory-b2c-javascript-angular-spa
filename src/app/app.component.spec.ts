@@ -8,7 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BroadcastService, MsalService, MsalAngularConfiguration } from '@azure/msal-angular';
 import { MSAL_CONFIG, MSAL_CONFIG_ANGULAR } from '@azure/msal-angular';
 import { Configuration } from 'msal';
-import { msalConfig, apiConfig, isIE, protectedResourceMap } from './app-config';
+import { msalConfig, msalAngularConfig } from './app-config';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -31,12 +31,7 @@ describe('AppComponent', () => {
         },
         {
           provide: MSAL_CONFIG_ANGULAR,
-          useValue: {
-            popUp: !isIE,
-            consentScopes: apiConfig.b2cScopes,
-            unprotectedResources: [],
-            protectedResourceMap
-          } as MsalAngularConfiguration
+          useValue: msalAngularConfig as MsalAngularConfiguration
         },
         BroadcastService
       ]
