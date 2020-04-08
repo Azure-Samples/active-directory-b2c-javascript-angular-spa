@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MsalService } from '@azure/msal-angular';
+import { MsalService, BroadcastService } from '@azure/msal-angular';
 import { InteractionRequiredAuthError, AuthError } from 'msal';
 import { apiConfig } from '../app-config';
 
@@ -14,10 +14,20 @@ export class ProfileComponent implements OnInit {
 
   profile: any;
 
-  constructor(private authService: MsalService, private http: HttpClient) { }
+  constructor(private broadcastService: BroadcastService, private authService: MsalService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getProfile(apiConfig.webApi);
+
+    this.broadcastService.subscribe('msal:acquireTokenSuccess', (payload) => {
+      console.log('access token acquired at: ' + new Date().toString());
+      console.log(payload);
+    });
+ 
+    this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
+      console.log('access token acquisition fails');
+      console.log(payload);
+    });
   }
 
   getProfile(url: string) {

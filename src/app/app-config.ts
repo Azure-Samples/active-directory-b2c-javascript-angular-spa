@@ -20,9 +20,9 @@ export const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.n
  * Enter here the coordinates of your Web API and scopes for access token request
  * The current application coordinates were pre-registered in a B2C tenant.
  */
-export const apiConfig = {
+export const apiConfig: {b2cScopes: string[], webApi: string} = {
     b2cScopes: ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read'],
-    webApi: 'https://fabrikamb2chello.azurewebsites.net/hello'
+    webApi: 'http://localhost:5000/hello'
 };
 // #endregion
 
@@ -50,12 +50,12 @@ export const msalConfig: Configuration = {
  * Scopes you enter here will be consented once you authenticate. For a full list of available authentication parameters, 
  * visit https://azuread.github.io/microsoft-authentication-library-for-js/docs/msal/modules/_authenticationparameters_.html
  */
-export const loginRequest = {
+export const loginRequest: {scopes: string[]} = {
     scopes: ['openid', 'profile'],
 };
 
 // Scopes you enter will be used for the access token request for your web API
-export const tokenRequest = {
+export const tokenRequest: {scopes: string[]} = {
     scopes: apiConfig.b2cScopes // i.e. [https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read]
 };
 // #endregion

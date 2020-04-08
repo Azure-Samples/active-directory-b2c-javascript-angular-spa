@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { Logger, CryptoUtils } from 'msal';
-import { loginRequest, isIE } from './app-config';
+import { isIE } from './app-config';
 
 @Component({
   selector: 'app-root',
@@ -23,12 +23,14 @@ export class AppComponent implements OnInit {
 
     // event listeners for authentication status
     this.broadcastService.subscribe('msal:loginSuccess', (payload) => {
-      console.log('login succeeded');
+      console.log('login succeeded. id token acquired at: ' + new Date().toString());
+      console.log(payload);
       this.checkAccount();
     });
 
     this.broadcastService.subscribe('msal:loginFailure', (payload) => {
       console.log('login failed');
+      console.log(payload);
     });
 
     // redirect callback for redirect flow (IE)
@@ -56,9 +58,9 @@ export class AppComponent implements OnInit {
 
   login() {
     if (isIE) {
-      this.authService.loginRedirect(loginRequest);
+      this.authService.loginRedirect();
     } else {
-      this.authService.loginPopup(loginRequest);
+      this.authService.loginPopup();
     }
   }
 
