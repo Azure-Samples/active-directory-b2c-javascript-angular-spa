@@ -22,7 +22,7 @@ export const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.n
  */
 export const apiConfig: {b2cScopes: string[], webApi: string} = {
     b2cScopes: ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read'],
-    webApi: 'http://localhost:5000/hello'
+    webApi: 'https://fabrikamb2chello.azurewebsites.net/hello'
 };
 // #endregion
 
@@ -37,8 +37,10 @@ export const msalConfig: Configuration = {
     auth: {
         clientId: "e760cab2-b9a1-4c0d-86fb-ff7084abd902",
         authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi",
-        validateAuthority: false,
         redirectUri: "http://localhost:6420/",
+        postLogoutRedirectUri: "http://localhost:6420/",
+        navigateToLoginRequestUrl: true,
+        validateAuthority: false,
       },
     cache: {
         cacheLocation: "localStorage",
