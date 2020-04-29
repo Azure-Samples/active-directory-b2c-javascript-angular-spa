@@ -1,11 +1,14 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatToolbarModule, MatButtonModule, MatListModule, MatCardModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BroadcastService, MsalService, MsalAngularConfiguration } from '@azure/msal-angular';
 import { MSAL_CONFIG, MSAL_CONFIG_ANGULAR } from '@azure/msal-angular';
 import { Configuration } from 'msal';
-import { msalConfig, apiConfig, isIE } from './config';
+import { msalConfig, msalAngularConfig } from './app-config';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -28,14 +31,7 @@ describe('AppComponent', () => {
         },
         {
           provide: MSAL_CONFIG_ANGULAR,
-          useValue: {
-            popUp: !isIE,
-            consentScopes: apiConfig.b2cScopes,
-            unprotectedResources: [],
-            protectedResourceMap: [
-              [apiConfig.webApi, apiConfig.b2cScopes],
-          ],
-          } as MsalAngularConfiguration
+          useValue: msalAngularConfig as MsalAngularConfiguration
         },
         BroadcastService
       ]

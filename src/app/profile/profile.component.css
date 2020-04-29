@@ -1,0 +1,9 @@
+.card-section {
+    margin: 10%;
+    padding: 5%;
+}
+  
+#profile {
+    font-size: large;
+    background-color: rgb(161, 104, 252);
+}
