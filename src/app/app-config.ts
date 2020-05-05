@@ -5,17 +5,33 @@ import { MsalAngularConfiguration } from '@azure/msal-angular';
 export const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 /** =================== REGIONS ====================
- * 
- * 1) Web API configuration parameters
- * 2) Authentication configuration parameters
- * 3) MSAL-Angular specific configuration parameters
- * 
+ * 1) B2C policies and user flows
+ * 2) Web API configuration parameters
+ * 3) Authentication configuration parameters
+ * 4) MSAL-Angular specific configuration parameters
  * ================================================= 
 */ 
 
+// #region 1) B2C policies and user flows
+// Store your policies/user-flows and their corresponding authority string here
+export const b2cPolicies = {
+    names: {
+        signUpSignIn: "b2c_1_susi",
+        resetPassword: "b2c_1_reset",
+    },
+    authorities: {
+        signUpSignIn: {
+            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi"
+        },
+        resetPassword: {
+            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_reset"
+        } 
+    }
+}
+// #endregion
 
 
-// #region 1) Web API Configuration
+// #region 2) Web API Configuration
 /** 
  * Enter here the coordinates of your Web API and scopes for access token request
  * The current application coordinates were pre-registered in a B2C tenant.
@@ -28,7 +44,7 @@ export const apiConfig: {b2cScopes: string[], webApi: string} = {
 
 
 
-// #region 2) Authentication Configuration
+// #region 3) Authentication Configuration
 /** 
  * Config object to be passed to Msal on creation. For a full list of msal.js configuration parameters,
  * visit https://azuread.github.io/microsoft-authentication-library-for-js/docs/msal/modules/_configuration_.html
@@ -36,7 +52,7 @@ export const apiConfig: {b2cScopes: string[], webApi: string} = {
 export const msalConfig: Configuration = {
     auth: {
         clientId: "e760cab2-b9a1-4c0d-86fb-ff7084abd902",
-        authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi",
+        authority: b2cPolicies.authorities.signUpSignIn.authority,
         redirectUri: "http://localhost:6420/",
         postLogoutRedirectUri: "http://localhost:6420/",
         navigateToLoginRequestUrl: true,
@@ -64,7 +80,7 @@ export const tokenRequest: {scopes: string[]} = {
 
 
 
-// #region 3) MSAL-Angular Configuration
+// #region 4) MSAL-Angular Configuration
 // here you can define the coordinates and required permissions for your protected resources
 export const protectedResourceMap: [string, string[]][] = [
     [apiConfig.webApi, apiConfig.b2cScopes] // i.e. [https://fabrikamb2chello.azurewebsites.net/hello, ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read']]
