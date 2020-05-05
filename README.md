@@ -14,7 +14,7 @@ urlFragment: "active-directory-b2c-javascript-angular-spa"
 
 > **Warning**: Silent renewing of access tokens is not supported by all social identity providers.
 
-This simple sample demonstrates how to use the [Microsoft Authentication Library for JavaScript (msal.js)](https://github.com/AzureAD/microsoft-authentication-library-for-js) to get an access token and call an API secured by Azure AD B2C.
+This sample demonstrates how to use the [Microsoft Authentication Library for JavaScript (msal.js)](https://github.com/AzureAD/microsoft-authentication-library-for-js) to get an access token and call an API secured by Azure AD B2C.
 
 ## Contents
 
@@ -116,7 +116,7 @@ Now in the sample code, you can replace the single page application's demo envir
 3. Find the assignment for `authority` and replacing `b2c_1_susi` with the name of the policy you created in Step 2, and `fabrikamb2c.onmicrosoft.com` by the name of your Azure AD B2C tenant, for example `https://<your-tenant-name>.b2clogin.com/<your-tenant-name>.onmicrosoft.com/<your-sign-in-sign-up-policy>`
 4. Find the assignment for `redirectUri` replacing the URL with redirect uri you that you assigned on Azure Portal>Authentication.
 5. Find the assignment for the scopes `b2cScopes` replacing the URL with the scope URL you created for the Web API, e.g. `b2cScopes: ["https://<your-tenant-name>.onmicrosoft.com/helloapi/demo.read"]`
-6. Find the assignment for API URL `webApi` replacing the current URL with the URL where you deployed your Web API, e.g. `webApi: "http://localhost:5000/hello`
+6. Find the assignment for API URL `webApi` replacing the current URL with the URL where you deployed your Web API, e.g. `webApi: "http://localhost:5000/hello"`
 
 Your resulting code should look as follows:
   
