@@ -13,7 +13,11 @@ export const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.n
 */ 
 
 // #region 1) B2C policies and user flows
-// Store your policies/user-flows and their corresponding authority string here
+/**
+ * Enter here the user flows and custom policies for your B2C application,
+ * To learn more about user flows, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview
+ * To learn more about custom policies, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-overview
+ */
 export const b2cPolicies = {
     names: {
         signUpSignIn: "b2c_1_susi",
