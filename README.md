@@ -3,9 +3,10 @@ page_type: sample
 languages:
 - javascript
 - typescript
-- angular
 products:
 - azure-active-directory-b2c
+- microsoft-authentication-library
+- angular
 description: "An Azure AD B2C single-page application calling a web api using MSAL-Angular for authentication."
 urlFragment: "active-directory-b2c-javascript-angular-spa"
 ---
