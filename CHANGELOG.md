@@ -2,7 +2,7 @@
 
 ## 08/05/2020
 
-* Updated msal.js to 1.3.3.
+* Updated msal.js to 1.3.4.
 * Added issue & PR templates.
 * Minor README corrections.
 
