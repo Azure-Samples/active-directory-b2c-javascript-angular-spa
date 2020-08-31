@@ -2,7 +2,7 @@
 
 ## 08/31/2020
 
-* Updated MSAL.js to 1.4.0.
+* Updated MSAL.js to 1.4.0 and MSAL-Angular to 1.1.1.
 * Added Profile Edit user-flow.
 * Fixed favicon loading issue.
 
