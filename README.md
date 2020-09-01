@@ -126,16 +126,37 @@ const apiConfig = {
   b2cScopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"],
   webApi: "http://localhost:5000/hello"
 };
-
 ```
 
 ```TypeScript
+
+const b2cPolicies = {
+    names: {
+        signUpSignIn: "b2c_1_susi",
+        forgotPassword: "b2c_1_reset",
+        editProfile: "b2c_1_edit_profile"
+    },
+    authorities: {
+        signUpSignIn: {
+            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi",
+        },
+        forgotPassword: {
+            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_reset",
+        },
+        editProfile: {
+            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_edit_profile"
+        }
+    },
+}
+
 const msalConfig = {
   auth: {
     clientId: "e760cab2-b9a1-4c0d-86fb-ff7084abd902",
-    authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi",
-    validateAuthority: false,
+    authority: b2cPolicies.authorities.signUpSignIn.authority,
     redirectUri: "http://localhost:6420/",
+    postLogoutRedirectUri: "http://localhost:6420/",
+    navigateToLoginRequestUrl: true,
+    validateAuthority: false,
   },
   cache: {
     cacheLocation: "localStorage",
@@ -148,7 +169,7 @@ const loginRequest = {
 };
 
 const tokenRequest = {
-  scopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"]
+  scopes: apiConfig.b2cScopes // i.e. ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"]
 };
 ```
 
@@ -161,21 +182,20 @@ const tokenRequest = {
     npm install && npm update
     ```
 
-2. Run the Web application:
+2. Run the application:
 
     ```bash
     npm start
     ```
 
 3. Go to `http://localhost:6420`.
-4. Click the **login** button at the top of the application screen. The sample works exactly in the same way regardless of the account type you choose, apart from some visual differences in the authentication and consent experience. Upon successful sign in, the application screen will show buttons that allow you to call an API and sign out.
+4. Click the **login** button at the top of the application screen. The sample works exactly in the same way regardless of the account type you choose, apart from some visual differences in the authentication and consent experience. Upon successful sign in, the application screen will show buttons that allow you to call an API, edit your profile and sign out.
 5. Click on the **Call Web API** and see the textual representation of the JSON object that is returned. Make sure your Node.js Web API sample is still running on port 5000.
 6. Sign out by clicking the **Logout** button.  
 
 ## Optional
 
-- [Configure application to use b2clogin.com](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-b2c-overview#configure-application-to-use-b2clogincom)
-- The MSAL.js library allows you to pass [login_hint parameter](https://docs.microsoft.com/en-us/azure/active-directory-b2c/direct-signin) in the [AuthenticationParameters object](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#signing-in-and-getting-tokens-with-msaljs), using `loginHint` attribute.
+- The MSAL.js library allows you to pass a [login_hint parameter](https://docs.microsoft.com/azure/active-directory-b2c/direct-signin) in the [AuthenticationParameters object](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#signing-in-and-getting-tokens-with-msaljs), using the `loginHint` attribute.
 
     ```TypeScript
       const loginRequest = {
@@ -184,7 +204,7 @@ const tokenRequest = {
       };
     ```
 
-- You can pass any custom query string parameter in the [AuthenticationParameters object](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#signing-in-and-getting-tokens-with-msaljs), using `extraQueryParameters` attribute. Following sample sets the campaignId that can be used in the [Azure AD B2C UI](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-ui-customization-custom-dynamic), and the [ui_locales](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-reference-language-customization) set to es (Spanish).
+- You can pass any custom query string parameter in the [AuthenticationParameters object](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki/MSAL.js-1.0.0-api-release#signing-in-and-getting-tokens-with-msaljs), using `extraQueryParameters` attribute. Following sample sets the campaignId that can be used in the [Azure AD B2C UI](https://docs.microsoft.com/azure/active-directory-b2c/active-directory-b2c-ui-customization-custom-dynamic), and the [ui_locales](https://docs.microsoft.com/azure/active-directory-b2c/active-directory-b2c-reference-language-customization) set to es (Spanish).
 
     ```TypeScript
       const loginRequest = {
@@ -199,11 +219,11 @@ For more information on Azure B2C, see:
 
 - [Azure AD B2C documentation homepage](http://aka.ms/aadb2c)
 - [Microsoft authentication library for js Wiki](https://github.com/AzureAD/microsoft-authentication-library-for-js/wiki)
-- [Integrate Microsoft Authentication Library (MSAL) with Azure Active Directory B2C](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-b2c-overview)
+- [Integrate Microsoft Authentication Library (MSAL) with Azure Active Directory B2C](https://docs.microsoft.com/azure/active-directory/develop/msal-b2c-overview)
 
 ## Community Help and Support
 
-We use Stack Overflow with the [msal](https://stackoverflow.com/questions/tagged/msal) and [azure-ad-b2c](https://stackoverflow.com/questions/tagged/azure-ad-b2c) tags to provide support. We highly recommend you ask your questions on Stack Overflow first and browse existing issues to see if someone has asked your question before. Make sure that your questions or comments are tagged with [msal.js].
+We use **StackOverflow** with the [msal](https://stackoverflow.com/questions/tagged/msal) and [azure-ad-b2c](https://stackoverflow.com/questions/tagged/azure-ad-b2c) tags to provide support. We highly recommend you ask your questions on **StackOverflow** first and browse existing issues to see if someone has asked your question before. Make sure that your questions or comments are tagged with [msal.js].
 
 If you find and bug or have a feature request, please raise the issue on [GitHub Issues](../../issues).
 

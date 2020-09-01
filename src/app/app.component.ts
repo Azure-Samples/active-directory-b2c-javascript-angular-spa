@@ -27,9 +27,9 @@ export class AppComponent implements OnInit {
     // We need to reject id tokens that were not issued with the default sign-in policy.
     // "acr" claim in the token tells us what policy is used (NOTE: for new policies (v2.0), use "tfp" instead of "acr")
     // To learn more about b2c tokens, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
-      if (success.idToken.claims['acr'] !== b2cPolicies.names.signUpSignIn) {
+      if (success.idToken.claims['acr'] === b2cPolicies.names.resetPassword) {
         window.alert("Password has been reset successfully. \nPlease sign-in with your new password");
-        return this.authService.logout()
+        return this.authService.logout();
       }
 
       console.log('login succeeded. id token acquired at: ' + new Date().toString());
@@ -86,5 +86,13 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  editProfile() {
+    if (isIE) {
+      this.authService.loginRedirect(b2cPolicies.authorities.editProfile);
+    } else {
+      this.authService.loginPopup(b2cPolicies.authorities.editProfile);
+    }
   }
 }

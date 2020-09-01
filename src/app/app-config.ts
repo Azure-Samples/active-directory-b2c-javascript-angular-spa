@@ -22,6 +22,7 @@ export const b2cPolicies = {
     names: {
         signUpSignIn: "b2c_1_susi",
         resetPassword: "b2c_1_reset",
+        editProfile: "b2c_1_edit_profile"
     },
     authorities: {
         signUpSignIn: {
@@ -29,7 +30,10 @@ export const b2cPolicies = {
         },
         resetPassword: {
             authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_reset"
-        } 
+        },
+        editProfile: {
+            authority: "https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_edit_profile"
+        }
     }
 }
 // #endregion
