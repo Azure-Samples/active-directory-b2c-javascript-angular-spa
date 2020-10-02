@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { Logger, CryptoUtils } from 'msal';
 import { isIE, b2cPolicies } from './app-config';
@@ -10,6 +11,10 @@ import { isIE, b2cPolicies } from './app-config';
 })
 
 export class AppComponent implements OnInit {
+  subscription1: Subscription;
+  subscription2: Subscription;
+  subscriptions: Subscription[] = [];
+  
   title = 'Azure AD B2C';
   isIframe = false;
   loggedIn = false;
@@ -22,7 +27,7 @@ export class AppComponent implements OnInit {
     this.checkAccount();
 
     // event listeners for authentication status
-    this.broadcastService.subscribe('msal:loginSuccess', (success) => {
+    this.subscription1 = this.broadcastService.subscribe('msal:loginSuccess', (success) => {
 
     // We need to reject id tokens that were not issued with the default sign-in policy.
     // "acr" claim in the token tells us what policy is used (NOTE: for new policies (v2.0), use "tfp" instead of "acr")
@@ -38,7 +43,7 @@ export class AppComponent implements OnInit {
       this.checkAccount();
     });
 
-    this.broadcastService.subscribe('msal:loginFailure', (error) => {
+    this.subscription2 = this.broadcastService.subscribe('msal:loginFailure', (error) => {
       console.log('login failed');
       console.log(error);
 
@@ -69,6 +74,15 @@ export class AppComponent implements OnInit {
       correlationId: CryptoUtils.createNewGuid(),
       piiLoggingEnabled: false
     }));
+
+    this.subscriptions.push(this.subscription1);
+    this.subscriptions.push(this.subscription2);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptions.length > 0) {
+      this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    }
   }
 
   // other methods
