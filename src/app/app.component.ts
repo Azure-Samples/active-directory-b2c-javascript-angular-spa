@@ -11,8 +11,6 @@ import { isIE, b2cPolicies } from './app-config';
 })
 
 export class AppComponent implements OnInit {
-  subscription1: Subscription;
-  subscription2: Subscription;
   subscriptions: Subscription[] = [];
   
   title = 'Azure AD B2C';
@@ -23,11 +21,14 @@ export class AppComponent implements OnInit {
   
   ngOnInit() {
 
+    let loginSuccessSubscription: Subscription;
+    let loginFailureSubscription: Subscription;
+
     this.isIframe = window !== window.parent && !window.opener;
     this.checkAccount();
 
     // event listeners for authentication status
-    this.subscription1 = this.broadcastService.subscribe('msal:loginSuccess', (success) => {
+    loginSuccessSubscription = this.broadcastService.subscribe('msal:loginSuccess', (success) => {
 
     // We need to reject id tokens that were not issued with the default sign-in policy.
     // "acr" claim in the token tells us what policy is used (NOTE: for new policies (v2.0), use "tfp" instead of "acr")
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit {
       this.checkAccount();
     });
 
-    this.subscription2 = this.broadcastService.subscribe('msal:loginFailure', (error) => {
+    loginFailureSubscription = this.broadcastService.subscribe('msal:loginFailure', (error) => {
       console.log('login failed');
       console.log(error);
 
@@ -75,14 +76,12 @@ export class AppComponent implements OnInit {
       piiLoggingEnabled: false
     }));
 
-    this.subscriptions.push(this.subscription1);
-    this.subscriptions.push(this.subscription2);
+    this.subscriptions.push(loginSuccessSubscription);
+    this.subscriptions.push(loginFailureSubscription);
   }
 
   ngOnDestroy(): void {
-    if (this.subscriptions.length > 0) {
-      this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    }
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   // other methods

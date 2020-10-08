@@ -12,8 +12,6 @@ import { apiConfig } from '../app-config';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  subscription1: Subscription;
-  subscription2: Subscription;
   subscriptions: Subscription[] = [];
 
   profile: any;
@@ -21,26 +19,27 @@ export class ProfileComponent implements OnInit {
   constructor(private broadcastService: BroadcastService, private authService: MsalService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    let loginSuccessSubscription: Subscription;
+    let loginFailureSubscription: Subscription;
+
     this.getProfile(apiConfig.webApi);
 
-    this.subscription1 = this.broadcastService.subscribe('msal:acquireTokenSuccess', (payload) => {
+    loginSuccessSubscription = this.broadcastService.subscribe('msal:acquireTokenSuccess', (payload) => {
       console.log('access token acquired at: ' + new Date().toString());
       console.log(payload);
     });
  
-    this.subscription2 = this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
+    loginFailureSubscription = this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
       console.log('access token acquisition fails');
       console.log(payload);
     });
 
-    this.subscriptions.push(this.subscription1);
-    this.subscriptions.push(this.subscription2);
+    this.subscriptions.push(loginSuccessSubscription);
+    this.subscriptions.push(loginFailureSubscription);
   }
 
   ngOnDestroy(): void {
-    if (this.subscriptions.length > 0) {
-      this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    }
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   getProfile(url: string) {
