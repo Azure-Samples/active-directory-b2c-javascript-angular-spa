@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 import { MsalService, BroadcastService } from '@azure/msal-angular';
 import { InteractionRequiredAuthError, AuthError } from 'msal';
 import { apiConfig } from '../app-config';
@@ -11,23 +12,34 @@ import { apiConfig } from '../app-config';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  subscriptions: Subscription[] = [];
 
   profile: any;
 
   constructor(private broadcastService: BroadcastService, private authService: MsalService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    let loginSuccessSubscription: Subscription;
+    let loginFailureSubscription: Subscription;
+
     this.getProfile(apiConfig.webApi);
 
-    this.broadcastService.subscribe('msal:acquireTokenSuccess', (payload) => {
+    loginSuccessSubscription = this.broadcastService.subscribe('msal:acquireTokenSuccess', (payload) => {
       console.log('access token acquired at: ' + new Date().toString());
       console.log(payload);
     });
  
-    this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
+    loginFailureSubscription = this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
       console.log('access token acquisition fails');
       console.log(payload);
     });
+
+    this.subscriptions.push(loginSuccessSubscription);
+    this.subscriptions.push(loginFailureSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   getProfile(url: string) {
