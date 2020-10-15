@@ -48,13 +48,15 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log('login failed');
       console.log(error);
 
-      // Check for forgot password error
-      // Learn more about AAD error codes at https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
-      if (error.errorMessage.indexOf('AADB2C90118') > -1) {
-        if (isIE) {
-          this.authService.loginRedirect(b2cPolicies.authorities.resetPassword);
-        } else {
-          this.authService.loginPopup(b2cPolicies.authorities.resetPassword);
+      if (error.errorMessage) {
+        // Check for forgot password error
+        // Learn more about AAD error codes at https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
+        if (error.errorMessage.indexOf('AADB2C90118') > -1) {
+          if (isIE) {
+            this.authService.loginRedirect(b2cPolicies.authorities.resetPassword);
+          } else {
+            this.authService.loginPopup(b2cPolicies.authorities.resetPassword);
+          }
         }
       }
     });
