@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { MsalService, BroadcastService } from '@azure/msal-angular';
@@ -11,7 +11,7 @@ import { apiConfig } from '../app-config';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   profile: any;
@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
       console.log('access token acquired at: ' + new Date().toString());
       console.log(payload);
     });
- 
+
     loginFailureSubscription = this.broadcastService.subscribe('msal:acquireTokenFailure', (payload) => {
       console.log('access token acquisition fails');
       console.log(payload);

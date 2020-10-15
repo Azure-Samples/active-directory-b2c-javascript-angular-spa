@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BroadcastService, MsalService} from '@azure/msal-angular';
 import { Logger, CryptoUtils } from 'msal';
@@ -10,15 +10,15 @@ import { isIE, b2cPolicies } from './app-config';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  
+
   title = 'Azure AD B2C';
   isIframe = false;
   loggedIn = false;
 
   constructor(private broadcastService: BroadcastService, private authService: MsalService) { }
-  
+
   ngOnInit() {
 
     let loginSuccessSubscription: Subscription;
@@ -33,8 +33,8 @@ export class AppComponent implements OnInit {
     // We need to reject id tokens that were not issued with the default sign-in policy.
     // "acr" claim in the token tells us what policy is used (NOTE: for new policies (v2.0), use "tfp" instead of "acr")
     // To learn more about b2c tokens, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
-      if (success.idToken.claims['acr'] === b2cPolicies.names.resetPassword) {
-        window.alert("Password has been reset successfully. \nPlease sign-in with your new password");
+      if (success.idToken.claims.acr === b2cPolicies.names.resetPassword) {
+        window.alert('Password has been reset successfully. \nPlease sign-in with your new password');
         return this.authService.logout();
       }
 
@@ -48,15 +48,15 @@ export class AppComponent implements OnInit {
       console.log('login failed');
       console.log(error);
 
-        // Check for forgot password error
-        // Learn more about AAD error codes at https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
-        if (error.errorMessage.indexOf('AADB2C90118') > -1) {
-          if (isIE) {
-            this.authService.loginRedirect(b2cPolicies.authorities.resetPassword);
-          } else {
-            this.authService.loginPopup(b2cPolicies.authorities.resetPassword);
-          }
+      // Check for forgot password error
+      // Learn more about AAD error codes at https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
+      if (error.errorMessage.indexOf('AADB2C90118') > -1) {
+        if (isIE) {
+          this.authService.loginRedirect(b2cPolicies.authorities.resetPassword);
+        } else {
+          this.authService.loginPopup(b2cPolicies.authorities.resetPassword);
         }
+      }
     });
 
     // redirect callback for redirect flow (IE)
