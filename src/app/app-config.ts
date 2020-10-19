@@ -44,7 +44,7 @@ export const b2cPolicies = {
  * Enter here the coordinates of your Web API and scopes for access token request
  * The current application coordinates were pre-registered in a B2C tenant.
  */
-export const apiConfig: {b2cScopes: string[], webApi: string} = {
+export const apiConfig: {b2cScopes: string[]; webApi: string} = {
     b2cScopes: ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read'],
     webApi: 'https://fabrikamb2chello.azurewebsites.net/hello'
 };
