@@ -7,11 +7,11 @@ products:
 - azure-active-directory-b2c
 - microsoft-authentication-library
 - angular
-description: "An Azure AD B2C single-page application calling a web api using MSAL-Angular for authentication."
+description: "An Azure AD B2C single-page application calling a web API using MSAL-Angular for authentication."
 urlFragment: "active-directory-b2c-javascript-angular-spa"
 ---
 
-# Single-Page Application built on MSAL.js with Azure AD B2C
+# Angular Single-page Application using MSAL-Angular on Azure AD B2C
 
 > **Warning**: Silent renewing of access tokens is not supported by all social identity providers.
 
@@ -192,6 +192,8 @@ const tokenRequest = {
 4. Click the **login** button at the top of the application screen. The sample works exactly in the same way regardless of the account type you choose, apart from some visual differences in the authentication and consent experience. Upon successful sign in, the application screen will show buttons that allow you to call an API, edit your profile and sign out.
 5. Click on the **Call Web API** and see the textual representation of the JSON object that is returned. Make sure your Node.js Web API sample is still running on port 5000.
 6. Sign out by clicking the **Logout** button.  
+
+> How did we do? Consider taking a moment to [share your experience with us](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR73pcsbpbxNJuZCMKN0lURpUNVo1REo3VkZXQVdSRjUzRzlWWFJHMFNUNSQlQCN0PWcu).
 
 ## Optional
 
