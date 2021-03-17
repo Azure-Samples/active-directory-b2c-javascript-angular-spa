@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getTitleText() {
-    return element(by.css('.welcome')).getText() as Promise<string>;
+    return element(by.css('.mat-card-title')).getText() as Promise<string>;
   }
 }

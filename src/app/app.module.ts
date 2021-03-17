@@ -8,29 +8,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { Configuration } from 'msal';
 import {
-  MsalModule,
   MsalInterceptor,
-  MSAL_CONFIG,
-  MSAL_CONFIG_ANGULAR,
+  MsalModule,
   MsalService,
-  MsalAngularConfiguration
+  MSAL_GUARD_CONFIG,
+  MSAL_INSTANCE,
+  MSAL_INTERCEPTOR_CONFIG,
 } from '@azure/msal-angular';
 
-import { msalConfig, msalAngularConfig } from './app-config';
+import { 
+  MSALInstanceFactory, 
+  MSALGuardConfigFactory, 
+  MSALInterceptorConfigFactory 
+} from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-
-function MSALConfigFactory(): Configuration {
-  return msalConfig;
-}
-
-function MSALAngularConfigFactory(): MsalAngularConfiguration {
-  return msalAngularConfig;
-}
 
 @NgModule({
   declarations: [
@@ -57,12 +52,16 @@ function MSALAngularConfigFactory(): MsalAngularConfiguration {
       multi: true
     },
     {
-      provide: MSAL_CONFIG,
-      useFactory: MSALConfigFactory
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
     },
     {
-      provide: MSAL_CONFIG_ANGULAR,
-      useFactory: MSALAngularConfigFactory
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory
     },
     MsalService
   ],

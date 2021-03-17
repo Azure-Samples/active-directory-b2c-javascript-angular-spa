@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Sign-in with Microsoft Azure AD B2C');
+    expect<any>(page.getTitleText()).toEqual('Sign-in with Microsoft Azure AD B2C');
   });
 
   afterEach(async () => {
