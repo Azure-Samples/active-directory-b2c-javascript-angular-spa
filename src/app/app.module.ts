@@ -17,10 +17,10 @@ import {
   MSAL_INTERCEPTOR_CONFIG,
 } from '@azure/msal-angular';
 
-import { 
-  MSALInstanceFactory, 
-  MSALGuardConfigFactory, 
-  MSALInterceptorConfigFactory 
+import {
+  MSALInstanceFactory,
+  MSALGuardConfigFactory,
+  MSALInterceptorConfigFactory
 } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

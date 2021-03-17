@@ -102,7 +102,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
         authRequest: {
             scopes: [
                 ...api1Config.scopes,
-                //...api2Config.scopes
+                // ...api2Config.scopes
             ]
         }
     };
@@ -113,7 +113,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
     const protectedResourceMap = new Map<string, Array<string>>();
     protectedResourceMap.set(api1Config.uri, api1Config.scopes);
-    //protectedResourceMap.set(api2Config.uri, api2Config.scopes);
+    // protectedResourceMap.set(api2Config.uri, api2Config.scopes);
     return {
         interactionType: InteractionType.Popup,
         protectedResourceMap,

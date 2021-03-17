@@ -20,7 +20,7 @@ import { isIE, b2cPolicies } from './app-config';
 interface IdTokenClaims extends AuthenticationResult {
   idTokenClaims: {
     acr?: string
-  }
+  };
 }
 @Component({
   selector: 'app-root',
@@ -55,15 +55,16 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(
         filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS)
       ).subscribe((result: EventMessage) => {
-        const success: IdTokenClaims = <AuthenticationResult>result.payload;
+        const success: IdTokenClaims = result.payload as AuthenticationResult;
         if (success) {
           // We need to reject id tokens that were not issued with the default sign-in policy.
           // "acr" claim in the token tells us what policy is used (NOTE: for new policies (v2.0), use "tfp" instead of "acr")
           // To learn more about b2c tokens, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
-          if (success.idTokenClaims['acr'] === b2cPolicies.names.resetPassword) {
+          const b2cPoliciesName = 'acr';
+          if (success.idTokenClaims[b2cPoliciesName] === b2cPolicies.names.resetPassword) {
             window.alert('Password has been reset successfully. \nPlease sign-in with your new password');
             return this.authService.logout();
-          } else if (success.idTokenClaims['acr'] === b2cPolicies.names.editProfile) {
+          } else if (success.idTokenClaims[b2cPoliciesName] === b2cPolicies.names.editProfile) {
             window.alert('Profile has been updated successfully. \nPlease sign-in again.');
             return this.authService.logout();
           }
@@ -87,11 +88,12 @@ export class AppComponent implements OnInit, OnDestroy {
         if (error.message) {
           if (error instanceof AuthError) {
             // Check for forgot password error
-            // Learn more about AAD error codes at https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
+            // Learn more about AAD error codes at
+            // https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes
             if (error.message.indexOf('AADB2C90118') > -1) {
               // login request with reset authority
-              let resetPasswordFlowRequest = {
-                scopes: ["openid"],
+              const resetPasswordFlowRequest = {
+                scopes: ['openid'],
                 authority: b2cPolicies.authorities.resetPassword.authority,
               };
 
@@ -153,8 +155,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   editProfile() {
-    let editProfileFlowRequest = {
-      scopes: ["openid"],
+    const editProfileFlowRequest = {
+      scopes: ['openid'],
       authority: b2cPolicies.authorities.editProfile.authority,
     };
     this.login(editProfileFlowRequest);

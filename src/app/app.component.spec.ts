@@ -4,17 +4,18 @@ import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { MatToolbarModule } from '@angular/material/toolbar';import {
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {
   MsalService,
   MSAL_GUARD_CONFIG,
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG,
   MsalBroadcastService,
 } from '@azure/msal-angular';
-import { 
-  MSALInstanceFactory, 
-  MSALGuardConfigFactory, 
-  MSALInterceptorConfigFactory 
+import {
+  MSALInstanceFactory,
+  MSALGuardConfigFactory,
+  MSALInterceptorConfigFactory
 } from './app-config';
 
 describe('AppComponent', () => {
